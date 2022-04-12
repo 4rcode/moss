@@ -7,14 +7,16 @@ import (
 	"github.com/4rcode/moss/internal"
 )
 
-type CliParser struct {
+type FlagParser struct {
 	FileFlag, FileFlagUsage,
 	InlineFlag, InlineFlagUsage string
 
 	FlagSet *flag.FlagSet
+
+	FileParser FileParser
 }
 
-func (p CliParser) Parse(target interface{}) error {
+func (p FlagParser) Parse(target interface{}) error {
 	internal.Set(&p.FileFlag, "", "c")
 	internal.Set(&p.InlineFlag, "", "C")
 	internal.Set(&p.FlagSet, nil, flag.CommandLine)

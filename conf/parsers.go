@@ -4,7 +4,7 @@ package conf
 func Parse(target interface{}) error {
 	return Parsers{
 		EnvParser{},
-		CliParser{},
+		FlagParser{},
 	}.Parse(target)
 }
 

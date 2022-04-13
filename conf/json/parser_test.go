@@ -4,11 +4,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/4rcode/moss/config"
-	"github.com/4rcode/moss/config/json"
+	"github.com/4rcode/moss/conf"
+	"github.com/4rcode/moss/conf/json"
 )
 
-func TestAbc(t *testing.T) {
+func TestParser(t *testing.T) {
 	type _data struct {
 		Foo    string
 		bar    int
@@ -19,9 +19,9 @@ func TestAbc(t *testing.T) {
 
 	var data _data
 
-	config.Decoder(json.Decoder{
+	conf.Parser(json.Parser{
 		strings.NewReader(""),
-	}).Decode(&data)
+	}).Parse(&data)
 
 	t.Error(data)
 }

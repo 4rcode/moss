@@ -1,12 +1,12 @@
-package conf
+package file
 
 import (
 	"io"
 	"os"
 	"strings"
 
-	"github.com/4rcode/moss/config"
-	"github.com/4rcode/moss/config/json"
+	"github.com/4rcode/moss/conf"
+	"github.com/4rcode/moss/conf/json"
 	"github.com/4rcode/moss/internal"
 )
 
@@ -16,13 +16,13 @@ type FileParser struct {
 	Path []string
 
 	// ReaderParserFactory TODO
-	ReaderParserFactory func(io.Reader) config.Decoder
+	ReaderParserFactory func(io.Reader) conf.Parser
 
 	// Separator TODO
 	Separator string
 }
 
-func (p FileParser) Parse(target interface{}) error {
+func (p FileParser) Parse(value interface{}) error {
 	if p.ReaderParserFactory == nil {
 		p.ReaderParserFactory = p.newJsonParser
 	}
@@ -41,7 +41,7 @@ func (p FileParser) Parse(target interface{}) error {
 
 			if err = p.
 				ReaderParserFactory(file).
-				Decode(target); err != nil {
+				Parse(value); err != nil {
 				return err
 			}
 		}
@@ -50,6 +50,6 @@ func (p FileParser) Parse(target interface{}) error {
 	return nil
 }
 
-func (p *FileParser) newJsonParser(reader io.Reader) config.Decoder {
-	return json.Decoder{Reader: reader}
+func (p *FileParser) newJsonParser(reader io.Reader) conf.Parser {
+	return json.Parser{Reader: reader}
 }

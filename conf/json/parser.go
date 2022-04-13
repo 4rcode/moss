@@ -5,12 +5,12 @@ import (
 	"io"
 )
 
-// Decoder
-type Decoder struct {
+// Parser
+type Parser struct {
 	Reader io.Reader
 }
 
-func (d Decoder) Decode(value any) error {
+func (d Parser) Parse(value any) error {
 	decoder := json.NewDecoder(d.Reader)
 
 	for {

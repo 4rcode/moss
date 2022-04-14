@@ -1,21 +1,20 @@
 package attesting
 
-type Printer[T any] func(T, string, ...any)
+type Printer func(string, ...any)
 
-// With TODO
-func With[L any](logger L, printers ...Printer[L]) {
-	for _, print := range printers {
-		print(logger, "hi")
+// Attester TODO
+type Attester []Printer
+
+func (a Attester) Attest(truth bool, args ...any) bool {
+	if truth {
+		return true
 	}
-}
 
-type Attester func(bool, args ...any) bool
+	for _, print := range a {
+		if print != nil {
+			print("FAIL")
+		}
+	}
 
-type _attester[L any] struct {
-	logger   L
-	printers []Printer[L]
-}
-
-func (a *_attester[L]) attest() {
-
+	return false
 }

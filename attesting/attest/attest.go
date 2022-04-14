@@ -7,17 +7,17 @@ import (
 )
 
 func Error(tb testing.TB) attesting.Attester {
-	return attesting.Attester{tb.Errorf}
+	return attesting.Attester{tb.Error}
 }
 
 func Fatal(tb testing.TB) attesting.Attester {
-	return attesting.Attester{tb.Fatalf}
+	return attesting.Attester{tb.Fatal}
 }
 
 func Log(tb testing.TB) attesting.Attester {
-	return attesting.Attester{tb.Logf}
+	return attesting.Attester{tb.Log}
 }
 
 func Skip(tb testing.TB) attesting.Attester {
-	return attesting.Attester{tb.Skipf}
+	return attesting.Attester{tb.Skip}
 }

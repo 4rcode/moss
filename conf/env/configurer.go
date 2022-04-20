@@ -16,13 +16,13 @@ type Configurer struct {
 	// InlineVar TODO
 	InlineVar string
 
-	// PathConfigurerFactory TODO
-	PathConfigurerFactory interface {
+	// FileConfigurerFactory TODO
+	FileConfigurerFactory interface {
 		NewConfigurer(...string) conf.Configurer
 	}
 
-	// ReaderConfigurerFactory TODO
-	ReaderConfigurerFactory interface {
+	// InlineConfigurerFactory TODO
+	InlineConfigurerFactory interface {
 		NewConfigurer(io.Reader) conf.Configurer
 	}
 }

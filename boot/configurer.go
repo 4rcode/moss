@@ -12,14 +12,19 @@ import (
 type Configurer struct{}
 
 func (Configurer) Configure(value interface{}) error {
+	jsonConfigurerFactory := json.ConfigurerFactory{}
+	fileConfigurerFactory := file.ConfigurerFactory{
+		ConfigurerFactory: jsonConfigurerFactory,
+	}
+
 	return conf.Configurers{
 		env.Configurer{
-			PathConfigurerFactory:   file.ConfigurerFactory{},
-			ReaderConfigurerFactory: json.ConfigurerFactory{},
+			FileConfigurerFactory:   fileConfigurerFactory,
+			InlineConfigurerFactory: jsonConfigurerFactory,
 		},
 		cli.Configurer{
-			PathConfigurerFactory:   file.ConfigurerFactory{},
-			ReaderConfigurerFactory: json.ConfigurerFactory{},
+			FileConfigurerFactory:   fileConfigurerFactory,
+			InlineConfigurerFactory: jsonConfigurerFactory,
 		},
 	}.Configure(value)
 }

@@ -25,13 +25,13 @@ type Configurer struct {
 	// FlagSet TODO
 	FlagSet *flag.FlagSet
 
-	// PathConfigurerFactory TODO
-	PathConfigurerFactory interface {
+	// FileConfigurerFactory TODO
+	FileConfigurerFactory interface {
 		NewConfigurer(...string) conf.Configurer
 	}
 
-	// ReaderConfigurerFactory TODO
-	ReaderConfigurerFactory interface {
+	// InlineConfigurerFactory TODO
+	InlineConfigurerFactory interface {
 		NewConfigurer(io.Reader) conf.Configurer
 	}
 }
@@ -56,7 +56,7 @@ func (c Configurer) Configure(value interface{}) error {
 
 	if file != "" {
 		err := c.
-			PathConfigurerFactory.
+			FileConfigurerFactory.
 			NewConfigurer(file).
 			Configure(value)
 
@@ -67,7 +67,7 @@ func (c Configurer) Configure(value interface{}) error {
 
 	if inline != "" {
 		err := c.
-			ReaderConfigurerFactory.
+			InlineConfigurerFactory.
 			NewConfigurer(
 				strings.NewReader(inline)).
 			Configure(value)

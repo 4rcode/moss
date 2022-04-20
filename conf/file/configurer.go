@@ -35,6 +35,10 @@ func (c Configurer) Configure(value interface{}) error {
 		for _, path := range strings.Split(paths, c.Separator) {
 			file, err := os.Open(path)
 
+			if os.IsNotExist(err) {
+				continue
+			}
+
 			if err != nil {
 				return err
 			}

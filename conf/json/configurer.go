@@ -10,6 +10,7 @@ type Configurer struct {
 	Decoder *json.Decoder
 }
 
+// Configure TODO
 func (c Configurer) Configure(value interface{}) error {
 	if value == nil || c.Decoder == nil {
 		return nil

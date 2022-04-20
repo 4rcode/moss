@@ -2,12 +2,29 @@ package env
 
 import (
 	"fmt"
+	"io"
 	"os"
+
+	"github.com/4rcode/moss/conf"
 )
 
 // Configurer TODO
 type Configurer struct {
-	FileVar, InlineVar string
+	// FileVar TODO
+	FileVar,
+
+	// InlineVar TODO
+	InlineVar string
+
+	// PathConfigurerFactory TODO
+	PathConfigurerFactory interface {
+		NewConfigurer(...string) conf.Configurer
+	}
+
+	// ReaderConfigurerFactory TODO
+	ReaderConfigurerFactory interface {
+		NewConfigurer(io.Reader) conf.Configurer
+	}
 }
 
 func (c Configurer) Configure(value interface{}) error {

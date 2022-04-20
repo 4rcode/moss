@@ -10,18 +10,20 @@ import (
 
 // Configurer TODO
 type Configurer struct {
-	// Path TODO
-	Path []string
+	// ConfigurerFactory TODO
+	ConfigurerFactory interface {
+		NewConfigurer(io.Reader) conf.Configurer
+	}
 
-	// ReaderParserFactory TODO
-	ReaderParserFactory func(io.Reader) conf.Configurer
+	// Paths TODO
+	Paths []string
 
 	// Separator TODO
 	Separator string
 }
 
-func (c Configurer) Parse(value interface{}) error {
-	if c.ReaderParserFactory == nil {
+func (c Configurer) Configure(value interface{}) error {
+	if value == nil || c.ConfigurerFactory == nil {
 		return nil
 	}
 
@@ -29,7 +31,7 @@ func (c Configurer) Parse(value interface{}) error {
 		c.Separator = string(os.PathListSeparator)
 	}
 
-	for _, paths := range c.Path {
+	for _, paths := range c.Paths {
 		for _, path := range strings.Split(paths, c.Separator) {
 			file, err := os.Open(path)
 
@@ -39,9 +41,12 @@ func (c Configurer) Parse(value interface{}) error {
 
 			defer file.Close()
 
-			if err = c.
-				ReaderParserFactory(file).
-				Configure(value); err != nil {
+			err = c.
+				ConfigurerFactory.
+				NewConfigurer(file).
+				Configure(value)
+
+			if err != nil {
 				return err
 			}
 		}

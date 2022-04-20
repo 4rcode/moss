@@ -11,14 +11,12 @@ type Configurer struct {
 }
 
 func (c Configurer) Configure(value interface{}) error {
-	decoder := c.Decoder
-
-	if value == nil || decoder == nil {
+	if value == nil || c.Decoder == nil {
 		return nil
 	}
 
 	for {
-		err := decoder.Decode(value)
+		err := c.Decoder.Decode(value)
 
 		if err == nil {
 			continue

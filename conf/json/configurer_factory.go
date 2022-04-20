@@ -3,6 +3,8 @@ package json
 import (
 	"encoding/json"
 	"io"
+
+	"github.com/4rcode/moss/conf"
 )
 
 // ConfigurerFactory TODO
@@ -12,28 +14,18 @@ type ConfigurerFactory struct {
 	}
 }
 
-func (c ConfigurerFactory) NewConfigurer(reader io.Reader) *Configurer {
+func (c ConfigurerFactory) NewConfigurer(reader io.Reader) conf.Configurer {
 	if reader == nil {
-		return nil
+		return &Configurer{}
 	}
 
 	var decoder *json.Decoder
 
-	if c.DecoderFactory != nil {
+	if c.DecoderFactory == nil {
+		decoder = json.NewDecoder(reader)
+	} else {
 		decoder = c.DecoderFactory.NewDecoder(reader)
 	}
 
-	if decoder == nil {
-		decoder = c.NewDecoder(reader)
-	}
-
 	return &Configurer{decoder}
-}
-
-func (c ConfigurerFactory) NewDecoder(reader io.Reader) *json.Decoder {
-	if reader == nil {
-		return &json.Decoder{}
-	}
-
-	return json.NewDecoder(reader)
 }

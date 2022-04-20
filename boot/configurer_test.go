@@ -4,6 +4,6 @@ import (
 	"testing"
 )
 
-func TestParser(t *testing.T) {
+func TestConfigurer(t *testing.T) {
 
 }

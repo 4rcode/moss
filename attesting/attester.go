@@ -1,10 +1,10 @@
 package attesting
 
 // Attester TODO
-type Attester []func(...any)
+type Attester []func(...interface{})
 
 // Attest TODO
-func (a Attester) Attest(truth bool, args ...any) bool {
+func (a Attester) Attest(truth bool, args ...interface{}) bool {
 	if truth {
 		return true
 	}

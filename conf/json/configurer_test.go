@@ -1,14 +1,15 @@
 package json_test
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 
 	"github.com/4rcode/moss/conf"
-	"github.com/4rcode/moss/conf/json"
+	json_conf "github.com/4rcode/moss/conf/json"
 )
 
-func TestParser(t *testing.T) {
+func TestConfigurer(t *testing.T) {
 	type _data struct {
 		Foo    string
 		bar    int
@@ -19,9 +20,9 @@ func TestParser(t *testing.T) {
 
 	var data _data
 
-	conf.Parser(json.Parser{
-		strings.NewReader(""),
-	}).Parse(&data)
+	conf.Configurer(json_conf.Configurer{
+		json.NewDecoder(strings.NewReader(""))},
+	).Configure(&data)
 
 	t.Error(data)
 }

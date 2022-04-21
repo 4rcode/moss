@@ -12,7 +12,6 @@ import (
 func TestConfigurer(t *testing.T) {
 	type _data struct {
 		Foo    string
-		bar    int
 		Foobar struct {
 			foo, Bar string
 		}

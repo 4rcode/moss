@@ -8,15 +8,19 @@ import (
 )
 
 // ConfigurerFactory TODO
-type ConfigurerFactory struct{}
+type ConfigurerFactory func(io.Reader) *json.Decoder
 
 // NewConfigurer TODO
-func (c ConfigurerFactory) NewConfigurer(reader io.Reader) conf.Configurer {
-	var decoder *json.Decoder
-
-	if reader != nil {
-		decoder = json.NewDecoder(reader)
+func (f ConfigurerFactory) NewConfigurer(reader io.Reader) conf.Configurer {
+	if reader == nil {
+		return &Configurer{}
 	}
 
-	return &Configurer{decoder}
+	if f == nil {
+		f = json.NewDecoder
+	}
+
+	return &Configurer{
+		f(reader),
+	}
 }

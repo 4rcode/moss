@@ -12,7 +12,8 @@ import (
 type Configurer struct{}
 
 func (Configurer) Configure(value interface{}) error {
-	jsonConfigurerFactory := json.ConfigurerFactory{}
+	var jsonConfigurerFactory json.ConfigurerFactory
+
 	fileConfigurerFactory := file.ConfigurerFactory{
 		ConfigurerFactory: jsonConfigurerFactory,
 	}

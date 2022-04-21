@@ -10,20 +10,14 @@ import (
 
 // Configurer TODO
 type Configurer struct {
-	// FileFlag TODO
-	FileFlag,
-
-	// FileFlagUsage TODO
-	FileFlagUsage,
-
-	// InlineFlag TODO
-	InlineFlag,
-
-	// InlineFlagUsage TODO
-	InlineFlagUsage string
+	// Flags TODO
+	Flags Flags
 
 	// FlagSet TODO
 	FlagSet *flag.FlagSet
+
+	// Labels TODO
+	Labels Labels
 
 	// FileConfigurerFactory TODO
 	FileConfigurerFactory interface {
@@ -36,13 +30,29 @@ type Configurer struct {
 	}
 }
 
+type Flags struct {
+	// File TODO
+	File,
+
+	// Inline TODO
+	Inline string
+}
+
+type Labels struct {
+	// File TODO
+	File,
+
+	// Inline TODO
+	Inline string
+}
+
 func (c Configurer) Configure(value interface{}) error {
-	if c.FileFlag == "" {
-		c.FileFlag = "c"
+	if c.Flags.File == "" {
+		c.Flags.File = "c"
 	}
 
-	if c.InlineFlag == "" {
-		c.InlineFlag = "C"
+	if c.Flags.Inline == "" {
+		c.Flags.Inline = "C"
 	}
 
 	if c.FlagSet == nil {
@@ -51,8 +61,8 @@ func (c Configurer) Configure(value interface{}) error {
 
 	var file, inline string
 
-	c.FlagSet.StringVar(&file, c.FileFlag, file, c.FileFlagUsage)
-	c.FlagSet.StringVar(&inline, c.InlineFlag, inline, c.InlineFlagUsage)
+	c.FlagSet.StringVar(&file, c.Flags.File, file, c.Labels.File)
+	c.FlagSet.StringVar(&inline, c.Flags.Inline, inline, c.Labels.Inline)
 
 	if file != "" {
 		err := c.

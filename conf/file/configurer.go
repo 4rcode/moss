@@ -10,18 +10,15 @@ import (
 
 // Configurer TODO
 type Configurer struct {
-	// ConfigurerFactory TODO
 	ConfigurerFactory interface {
 		NewConfigurer(io.Reader) conf.Configurer
 	}
 
-	// Paths TODO
-	Paths []string
-
-	// Separator TODO
+	Paths     []string
 	Separator string
 }
 
+// Configure TODO
 func (c Configurer) Configure(value interface{}) error {
 	if value == nil || c.ConfigurerFactory == nil {
 		return nil

@@ -1,7 +1,7 @@
 package conf
 
-// Parser TODO
+// Configurer TODO
 type Configurer interface {
-	// Parse TODO
+	// Configure TODO
 	Configure(interface{}) error
 }

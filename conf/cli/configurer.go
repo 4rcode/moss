@@ -10,42 +10,32 @@ import (
 
 // Configurer TODO
 type Configurer struct {
-	// Flags TODO
-	Flags Flags
+	Factories ConfigurerFactories
+	Flags     Flags
+	FlagSet   *flag.FlagSet
+	Labels    UsageLabels
+}
 
-	// FlagSet TODO
-	FlagSet *flag.FlagSet
-
-	// Labels TODO
-	Labels Labels
-
-	// FileConfigurerFactory TODO
-	FileConfigurerFactory interface {
+// ConfigurerFactories TODO
+type ConfigurerFactories struct {
+	File interface {
 		NewConfigurer(...string) conf.Configurer
 	}
 
-	// InlineConfigurerFactory TODO
-	InlineConfigurerFactory interface {
+	Inline interface {
 		NewConfigurer(io.Reader) conf.Configurer
 	}
 }
 
+// Flags TODO
 type Flags struct {
-	// File TODO
-	File,
-
-	// Inline TODO
-	Inline string
+	File, Inline string
 }
 
-type Labels struct {
-	// File TODO
-	File,
+// UsageLabels TODO
+type UsageLabels Flags
 
-	// Inline TODO
-	Inline string
-}
-
+// Configure TODO
 func (c Configurer) Configure(value interface{}) error {
 	if c.Flags.File == "" {
 		c.Flags.File = "c"
@@ -64,9 +54,8 @@ func (c Configurer) Configure(value interface{}) error {
 	c.FlagSet.StringVar(&file, c.Flags.File, file, c.Labels.File)
 	c.FlagSet.StringVar(&inline, c.Flags.Inline, inline, c.Labels.Inline)
 
-	if file != "" {
-		err := c.
-			FileConfigurerFactory.
+	if file != "" && c.Factories.File != nil {
+		err := c.Factories.File.
 			NewConfigurer(file).
 			Configure(value)
 
@@ -75,9 +64,8 @@ func (c Configurer) Configure(value interface{}) error {
 		}
 	}
 
-	if inline != "" {
-		err := c.
-			InlineConfigurerFactory.
+	if inline != "" && c.Factories.Inline != nil {
+		err := c.Factories.Inline.
 			NewConfigurer(
 				strings.NewReader(inline)).
 			Configure(value)

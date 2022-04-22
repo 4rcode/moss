@@ -1,6 +1,6 @@
 package conf
 
-// Parsers TODO
+// Configurers TODO
 type Configurers []Configurer
 
 func (c Configurers) Configure(value interface{}) error {
@@ -9,7 +9,9 @@ func (c Configurers) Configure(value interface{}) error {
 			continue
 		}
 
-		if err := configurer.Configure(value); err != nil {
+		err := configurer.Configure(value)
+
+		if err != nil {
 			return err
 		}
 	}

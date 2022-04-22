@@ -5,8 +5,9 @@ import "github.com/4rcode/moss/conf"
 // ConfigurerFactory TODO
 type ConfigurerFactory Configurer
 
-func (c ConfigurerFactory) NewConfigurer(paths ...string) conf.Configurer {
-	c.Paths = append(c.Paths, paths...)
+// NewConfigurer TODO
+func (f ConfigurerFactory) NewConfigurer(paths ...string) conf.Configurer {
+	f.Paths = append(f.Paths, paths...)
 
-	return (*Configurer)(&c)
+	return Configurer(f)
 }

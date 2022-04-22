@@ -1,45 +1,68 @@
 package env
 
 import (
-	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/4rcode/moss/conf"
 )
 
 // Configurer TODO
 type Configurer struct {
-	// FileVar TODO
-	FileVar,
+	Factories ConfigurerFactories
+	Variables Variables
+}
 
-	// InlineVar TODO
-	InlineVar string
-
-	// FileConfigurerFactory TODO
-	FileConfigurerFactory interface {
+// ConfigurerFactories TODO
+type ConfigurerFactories struct {
+	File interface {
 		NewConfigurer(...string) conf.Configurer
 	}
 
-	// InlineConfigurerFactory TODO
-	InlineConfigurerFactory interface {
+	Inline interface {
 		NewConfigurer(io.Reader) conf.Configurer
 	}
 }
 
+// Variables TODO
+type Variables struct {
+	File, Inline string
+}
+
+// Configure TODO
 func (c Configurer) Configure(value interface{}) error {
-	if c.FileVar == "" {
-		c.FileVar = "MOSS_FILE"
+	if c.Variables.File == "" {
+		c.Variables.File = "MOSS_FILE"
 	}
 
-	if c.InlineVar == "" {
-		c.InlineVar = "MOSS_CONF"
+	if c.Variables.Inline == "" {
+		c.Variables.Inline = "MOSS_CONF"
 	}
 
-	fileVar := os.Getenv(c.FileVar)
-	inlineVar := os.Getenv(c.InlineVar)
+	file := os.Getenv(c.Variables.File)
+	inline := os.Getenv(c.Variables.Inline)
 
-	fmt.Println(fileVar, inlineVar)
+	if file != "" && c.Factories.File != nil {
+		err := c.Factories.File.
+			NewConfigurer(file).
+			Configure(value)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	if inline != "" && c.Factories.Inline != nil {
+		err := c.Factories.Inline.
+			NewConfigurer(
+				strings.NewReader(inline)).
+			Configure(value)
+
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }

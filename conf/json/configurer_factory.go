@@ -13,14 +13,14 @@ type ConfigurerFactory func(io.Reader) *json.Decoder
 // NewConfigurer TODO
 func (f ConfigurerFactory) NewConfigurer(reader io.Reader) conf.Configurer {
 	if reader == nil {
-		return &Configurer{}
+		return Configurer{}
 	}
 
 	if f == nil {
 		f = json.NewDecoder
 	}
 
-	return &Configurer{
+	return Configurer{
 		f(reader),
 	}
 }

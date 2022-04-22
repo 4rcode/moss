@@ -2,7 +2,6 @@ package cli
 
 import (
 	"flag"
-	"io"
 	"strings"
 
 	"github.com/4rcode/moss/conf"
@@ -18,13 +17,8 @@ type Configurer struct {
 
 // ConfigurerFactories TODO
 type ConfigurerFactories struct {
-	File interface {
-		NewConfigurer(...string) conf.Configurer
-	}
-
-	Inline interface {
-		NewConfigurer(io.Reader) conf.Configurer
-	}
+	File   conf.StringConfigurerFactory
+	Inline conf.ReaderConfigurerFactory
 }
 
 // Flags TODO
@@ -49,31 +43,27 @@ func (c Configurer) Configure(value interface{}) error {
 		c.FlagSet = flag.CommandLine
 	}
 
-	var file, inline string
-
-	c.FlagSet.StringVar(&file, c.Flags.File, file, c.Labels.File)
-	c.FlagSet.StringVar(&inline, c.Flags.Inline, inline, c.Labels.Inline)
-
-	if file != "" && c.Factories.File != nil {
-		err := c.Factories.File.
-			NewConfigurer(file).
-			Configure(value)
-
-		if err != nil {
-			return err
-		}
+	if c.Factories.File != nil {
+		c.FlagSet.Var(_flag{
+			c.buildFileConfigurer, value,
+		}, c.Flags.File, c.Labels.File)
 	}
 
-	if inline != "" && c.Factories.Inline != nil {
-		err := c.Factories.Inline.
-			NewConfigurer(
-				strings.NewReader(inline)).
-			Configure(value)
-
-		if err != nil {
-			return err
-		}
+	if c.Factories.Inline != nil {
+		c.FlagSet.Var(_flag{
+			c.buildInlineConfigurer, value,
+		}, c.Flags.Inline, c.Labels.Inline)
 	}
 
 	return nil
+}
+
+func (c Configurer) buildFileConfigurer(text string) conf.Configurer {
+	return c.Factories.File.NewConfigurer(text)
+}
+
+func (c Configurer) buildInlineConfigurer(text string) conf.Configurer {
+	return c.Factories.Inline.NewConfigurer(
+		strings.NewReader(text),
+	)
 }

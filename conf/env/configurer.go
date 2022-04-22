@@ -1,7 +1,6 @@
 package env
 
 import (
-	"io"
 	"os"
 	"strings"
 
@@ -16,13 +15,8 @@ type Configurer struct {
 
 // ConfigurerFactories TODO
 type ConfigurerFactories struct {
-	File interface {
-		NewConfigurer(...string) conf.Configurer
-	}
-
-	Inline interface {
-		NewConfigurer(io.Reader) conf.Configurer
-	}
+	File   conf.StringConfigurerFactory
+	Inline conf.ReaderConfigurerFactory
 }
 
 // Variables TODO
@@ -33,11 +27,11 @@ type Variables struct {
 // Configure TODO
 func (c Configurer) Configure(value interface{}) error {
 	if c.Variables.File == "" {
-		c.Variables.File = "MOSS_FILE"
+		c.Variables.File = "MOSS_CONFIG_FILES"
 	}
 
 	if c.Variables.Inline == "" {
-		c.Variables.Inline = "MOSS_CONF"
+		c.Variables.Inline = "MOSS_CONFIG"
 	}
 
 	file := os.Getenv(c.Variables.File)

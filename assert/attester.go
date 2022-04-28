@@ -1,4 +1,4 @@
-package attesting
+package assert
 
 // Attester TODO
 type Attester []func(...interface{})

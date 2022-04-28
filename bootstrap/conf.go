@@ -1,11 +1,11 @@
 package bootstrap
 
 import (
+	cli "github.com/4rcode/moss/cliconf"
 	"github.com/4rcode/moss/conf"
-	"github.com/4rcode/moss/conf/cli"
-	"github.com/4rcode/moss/conf/env"
-	"github.com/4rcode/moss/conf/file"
-	"github.com/4rcode/moss/conf/json"
+	env "github.com/4rcode/moss/envconf"
+	file "github.com/4rcode/moss/fileconf"
+	json "github.com/4rcode/moss/jsonconf"
 )
 
 // Configuration TODO

@@ -4,14 +4,14 @@ import (
 	"io"
 )
 
-// StringConfigurerFactory TODO
-type StringConfigurerFactory interface {
+// StringFactory TODO
+type StringFactory interface {
 	// NewConfigurer TODO
 	NewConfigurer(...string) Configurer
 }
 
-// ReaderConfigurerFactory TODO
-type ReaderConfigurerFactory interface {
+// ReaderFactory TODO
+type ReaderFactory interface {
 	// NewConfigurer TODO
 	NewConfigurer(io.Reader) Configurer
 }

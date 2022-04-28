@@ -10,7 +10,7 @@ import (
 
 // Configurer TODO
 type Configurer struct {
-	ConfigurerFactory interface {
+	Factory interface {
 		NewConfigurer(io.Reader) conf.Configurer
 	}
 
@@ -20,7 +20,7 @@ type Configurer struct {
 
 // Configure TODO
 func (c Configurer) Configure(value interface{}) error {
-	if value == nil || c.ConfigurerFactory == nil {
+	if value == nil || c.Factory == nil {
 		return nil
 	}
 
@@ -43,7 +43,7 @@ func (c Configurer) Configure(value interface{}) error {
 			defer file.Close()
 
 			err = c.
-				ConfigurerFactory.
+				Factory.
 				NewConfigurer(file).
 				Configure(value)
 

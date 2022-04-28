@@ -17,8 +17,8 @@ type Configurer struct {
 
 // ConfigurerFactories TODO
 type ConfigurerFactories struct {
-	File   conf.StringConfigurerFactory
-	Inline conf.ReaderConfigurerFactory
+	File   conf.StringFactory
+	Inline conf.ReaderFactory
 }
 
 // Flags TODO

@@ -1,6 +1,5 @@
-package conf
+package boot
 
-// Configurers TODO
 type Configurers []Configurer
 
 func (c Configurers) Configure(value interface{}) error {

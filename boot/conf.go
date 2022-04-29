@@ -1,11 +1,10 @@
-package bootstrap
+package boot
 
 import (
 	cli "github.com/4rcode/moss/cliconf"
-	"github.com/4rcode/moss/conf"
 	env "github.com/4rcode/moss/envconf"
 	file "github.com/4rcode/moss/fileconf"
-	json "github.com/4rcode/moss/jsonconf"
+	"github.com/4rcode/moss/jsoncn"
 )
 
 // Configuration TODO
@@ -13,7 +12,7 @@ type Configuration struct {
 	Cli  cli.Configurer
 	Env  env.Configurer
 	File file.ConfigurerFactory
-	Json json.ConfigurerFactory
+	Json jsoncn.ConfigurerFactory
 }
 
 // Configure TODO
@@ -38,7 +37,7 @@ func (c Configuration) Configure(value interface{}) error {
 		c.Cli.Factories.Inline = c.Json
 	}
 
-	return conf.Configurers{
+	return Configurers{
 		c.Env, c.Cli,
 	}.Configure(value)
 }

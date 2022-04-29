@@ -5,13 +5,13 @@ import (
 	"os"
 	"strings"
 
-	"github.com/4rcode/moss/conf"
+	"github.com/4rcode/moss/boot"
 )
 
 // Configurer TODO
 type Configurer struct {
 	Factory interface {
-		NewConfigurer(io.Reader) conf.Configurer
+		NewConfigurer(io.Reader) boot.Configurer
 	}
 
 	Paths     []string

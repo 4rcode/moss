@@ -4,7 +4,7 @@ import (
 	cli "github.com/4rcode/moss/cliconf"
 	env "github.com/4rcode/moss/envconf"
 	file "github.com/4rcode/moss/fileconf"
-	"github.com/4rcode/moss/jsoncn"
+	"github.com/4rcode/moss/jsonconf"
 )
 
 // Configuration TODO
@@ -12,7 +12,7 @@ type Configuration struct {
 	Cli  cli.Configurer
 	Env  env.Configurer
 	File file.ConfigurerFactory
-	Json jsoncn.ConfigurerFactory
+	Json jsonconf.Factory
 }
 
 // Configure TODO

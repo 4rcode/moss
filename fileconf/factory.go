@@ -1,4 +1,4 @@
-package file
+package fileconf
 
 import "github.com/4rcode/moss/conf"
 

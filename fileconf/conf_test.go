@@ -1,4 +1,4 @@
-package file_test
+package fileconf_test
 
 import (
 	"testing"

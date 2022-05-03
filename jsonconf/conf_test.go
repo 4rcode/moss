@@ -1,4 +1,4 @@
-package jsoncn_test
+package jsonconf_test
 
 import (
 	"encoding/json"
@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/4rcode/moss/boot"
+	"github.com/4rcode/moss/jsonconf"
 )
 
 func TestConfigurer(t *testing.T) {
@@ -18,7 +19,7 @@ func TestConfigurer(t *testing.T) {
 
 	var data _data
 
-	boot.Configurer(json.Configurer{
+	boot.Configurer(jsonconf.Configurer{
 		json.NewDecoder(strings.NewReader(""))},
 	).Configure(&data)
 

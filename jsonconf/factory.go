@@ -1,15 +1,15 @@
-package jsoncn
+package jsonconf
 
 import (
 	"encoding/json"
 	"io"
 )
 
-// ConfigurerFactory TODO
-type ConfigurerFactory func(io.Reader) *json.Decoder
+// Factory TODO
+type Factory func(io.Reader) *json.Decoder
 
 // NewConfigurer TODO
-func (f ConfigurerFactory) NewConfigurer(reader io.Reader) Configurer {
+func (f Factory) NewConfigurer(reader io.Reader) Configurer {
 	if reader == nil {
 		return Configurer{}
 	}

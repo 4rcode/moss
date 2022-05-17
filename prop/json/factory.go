@@ -1,4 +1,4 @@
-package jsonconf
+package jsonprop
 
 import (
 	"encoding/json"
@@ -9,16 +9,16 @@ import (
 type Factory func(io.Reader) *json.Decoder
 
 // NewConfigurer TODO
-func (f Factory) NewConfigurer(reader io.Reader) Configurer {
+func (f Factory) NewConfigurer(reader io.Reader) Decoder {
 	if reader == nil {
-		return Configurer{}
+		return Decoder{}
 	}
 
 	if f == nil {
 		f = json.NewDecoder
 	}
 
-	return Configurer{
+	return Decoder{
 		f(reader),
 	}
 }

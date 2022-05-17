@@ -1,12 +1,12 @@
-package jsonconf_test
+package jsonprop_test
 
 import (
 	"encoding/json"
 	"strings"
 	"testing"
 
-	"github.com/4rcode/moss/boot"
-	"github.com/4rcode/moss/jsonconf"
+	"github.com/4rcode/moss/property"
+	jsonprop "github.com/4rcode/moss/property/json"
 )
 
 func TestConfigurer(t *testing.T) {
@@ -19,9 +19,9 @@ func TestConfigurer(t *testing.T) {
 
 	var data _data
 
-	boot.Configurer(jsonconf.Configurer{
+	property.Decoder(jsonprop.Decoder{
 		json.NewDecoder(strings.NewReader(""))},
-	).Configure(&data)
+	).Decode(&data)
 
 	t.Error(data)
 }

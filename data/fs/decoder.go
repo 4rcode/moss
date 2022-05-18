@@ -1,26 +1,23 @@
-package fileconf
+package fsdata
 
 import (
-	"io"
 	"os"
 	"strings"
 
-	"github.com/4rcode/moss/boot"
+	"github.com/4rcode/moss/data"
 )
 
-// Configurer TODO
-type Configurer struct {
-	Factory interface {
-		NewConfigurer(io.Reader) boot.Configurer
-	}
+// Decoder TODO
+type Decoder struct {
+	Builder data.ReaderDecoderBuilder
 
 	Paths     []string
 	Separator string
 }
 
-// Configure TODO
-func (c Configurer) Configure(value interface{}) error {
-	if value == nil || c.Factory == nil {
+// Decode TODO
+func (c Decoder) Decode(value interface{}) error {
+	if value == nil || c.Builder == nil {
 		return nil
 	}
 
@@ -43,9 +40,9 @@ func (c Configurer) Configure(value interface{}) error {
 			defer file.Close()
 
 			err = c.
-				Factory.
-				NewConfigurer(file).
-				Configure(value)
+				Builder.
+				Build(file).
+				Decode(value)
 
 			if err != nil {
 				return err

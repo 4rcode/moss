@@ -1,14 +1,14 @@
-package cli
+package clidata
 
 import (
 	"flag"
 	"strings"
 
-	"github.com/4rcode/moss/conf"
+	"github.com/4rcode/moss/data"
 )
 
-// Configurer TODO
-type Configurer struct {
+// Decoder TODO
+type Decoder struct {
 	Factories ConfigurerFactories
 	Flags     Flags
 	FlagSet   *flag.FlagSet
@@ -17,8 +17,8 @@ type Configurer struct {
 
 // ConfigurerFactories TODO
 type ConfigurerFactories struct {
-	File   conf.StringFactory
-	Inline conf.ReaderFactory
+	File   data.StringDecoderBuilder
+	Inline data.ReaderDecoderBuilder
 }
 
 // Flags TODO
@@ -29,8 +29,8 @@ type Flags struct {
 // UsageLabels TODO
 type UsageLabels Flags
 
-// Configure TODO
-func (c Configurer) Configure(value interface{}) error {
+// Decode TODO
+func (c Decoder) Decode(value interface{}) error {
 	if c.Flags.File == "" {
 		c.Flags.File = "c"
 	}
@@ -58,12 +58,12 @@ func (c Configurer) Configure(value interface{}) error {
 	return nil
 }
 
-func (c Configurer) buildFileConfigurer(text string) conf.Configurer {
-	return c.Factories.File.NewConfigurer(text)
+func (c Decoder) buildFileConfigurer(text string) data.Decoder {
+	return c.Factories.File.Build(text)
 }
 
-func (c Configurer) buildInlineConfigurer(text string) conf.Configurer {
-	return c.Factories.Inline.NewConfigurer(
+func (c Decoder) buildInlineConfigurer(text string) data.Decoder {
+	return c.Factories.Inline.Build(
 		strings.NewReader(text),
 	)
 }

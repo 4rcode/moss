@@ -1,11 +1,11 @@
-package cli
+package clidata
 
 import (
-	"github.com/4rcode/moss/conf"
+	"github.com/4rcode/moss/data"
 )
 
 type _flag struct {
-	build func(string) conf.Configurer
+	build func(string) data.Decoder
 	value interface{}
 }
 
@@ -16,5 +16,5 @@ func (v _flag) String() string {
 func (v _flag) Set(option string) error {
 	return v.
 		build(option).
-		Configure(v.value)
+		Decode(v.value)
 }

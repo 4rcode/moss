@@ -1,4 +1,4 @@
-package fileconf_test
+package clidata_test
 
 import (
 	"testing"

@@ -1,13 +1,14 @@
 package jsondata
 
 import (
-	"encoding/json"
 	"io"
+
+	"github.com/4rcode/moss/data"
 )
 
 // Decoder TODO
 type Decoder struct {
-	Decoder *json.Decoder
+	Decoder data.Decoder
 }
 
 // Decode TODO

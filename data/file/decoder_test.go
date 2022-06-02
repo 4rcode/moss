@@ -1,4 +1,4 @@
-package fsdata_test
+package file_test
 
 import (
 	"testing"

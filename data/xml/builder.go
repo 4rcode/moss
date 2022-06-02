@@ -1,7 +1,7 @@
-package json
+package xml
 
 import (
-	"encoding/json"
+	"encoding/xml"
 	"io"
 
 	"github.com/4rcode/moss/data"
@@ -9,7 +9,7 @@ import (
 )
 
 // DecoderBuilder TODO
-type DecoderBuilder func(io.Reader) *json.Decoder
+type DecoderBuilder func(io.Reader) *xml.Decoder
 
 // Build TODO
 func (b DecoderBuilder) Build(reader io.Reader) data.Decoder {
@@ -18,10 +18,10 @@ func (b DecoderBuilder) Build(reader io.Reader) data.Decoder {
 	}
 
 	if b == nil {
-		b = json.NewDecoder
+		b = xml.NewDecoder
 	}
 
 	return seq.
-		DecoderBuilder[*json.Decoder](b).
+		DecoderBuilder[*xml.Decoder](b).
 		Build(reader)
 }

@@ -2,17 +2,17 @@ package boot
 
 import (
 	"github.com/4rcode/moss/data"
-	cli "github.com/4rcode/moss/data/cli"
-	env "github.com/4rcode/moss/data/env"
-	fs "github.com/4rcode/moss/data/fs"
-	json "github.com/4rcode/moss/data/json"
+	"github.com/4rcode/moss/data/cli"
+	"github.com/4rcode/moss/data/env"
+	"github.com/4rcode/moss/data/file"
+	"github.com/4rcode/moss/data/json"
 )
 
 // Configuration TODO
 type Configuration struct {
 	Cli  cli.Decoder
 	Env  env.Decoder
-	File fs.DecoderBuilder
+	File file.DecoderBuilder
 	Json json.DecoderBuilder
 }
 

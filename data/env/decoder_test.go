@@ -1,4 +1,4 @@
-package envdata_test
+package env_test
 
 import (
 	"testing"

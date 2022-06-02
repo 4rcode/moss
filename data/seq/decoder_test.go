@@ -1,4 +1,4 @@
-package jsondata_test
+package seq_test
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/4rcode/moss/data"
-	jsondata "github.com/4rcode/moss/data/json"
+	"github.com/4rcode/moss/data/seq"
 )
 
 func TestConfigurer(t *testing.T) {
@@ -16,7 +16,7 @@ func TestConfigurer(t *testing.T) {
 
 	var myData _data
 
-	data.Decoder(jsondata.Decoder{
+	data.Decoder(seq.Decoder{
 		json.NewDecoder(strings.NewReader(""))},
 	).Decode(&myData)
 

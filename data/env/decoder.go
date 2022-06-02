@@ -1,4 +1,4 @@
-package envdata
+package env
 
 import (
 	"os"
@@ -11,8 +11,7 @@ import (
 type Decoder struct {
 	File, Inline string
 
-	ReaderBuilder data.ReaderDecoderBuilder
-	StringBuilder data.StringDecoderBuilder
+	ReaderBuilder, StringBuilder data.DecoderBuilder
 }
 
 // Decode TODO
@@ -29,8 +28,10 @@ func (d Decoder) Decode(value interface{}) error {
 	inline := os.Getenv(d.Inline)
 
 	if file != "" && d.StringBuilder != nil {
-		err := d.StringBuilder.
-			Build(file).
+		err := d.
+			StringBuilder.
+			Build(
+				strings.NewReader(file)).
 			Decode(value)
 
 		if err != nil {

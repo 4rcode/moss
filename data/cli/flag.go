@@ -1,4 +1,4 @@
-package clidata
+package cli
 
 import (
 	"github.com/4rcode/moss/data"

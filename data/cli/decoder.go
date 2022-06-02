@@ -1,4 +1,4 @@
-package clidata
+package cli
 
 import (
 	"flag"
@@ -17,8 +17,7 @@ type Decoder struct {
 
 // ConfigurerFactories TODO
 type ConfigurerFactories struct {
-	File   data.StringDecoderBuilder
-	Inline data.ReaderDecoderBuilder
+	File, Inline data.DecoderBuilder
 }
 
 // Flags TODO
@@ -59,7 +58,7 @@ func (c Decoder) Decode(value interface{}) error {
 }
 
 func (c Decoder) buildFileConfigurer(text string) data.Decoder {
-	return c.Factories.File.Build(text)
+	return c.Factories.File.Build(strings.NewReader(text))
 }
 
 func (c Decoder) buildInlineConfigurer(text string) data.Decoder {

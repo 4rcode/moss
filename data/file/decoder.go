@@ -2,6 +2,7 @@ package file
 
 import (
 	"errors"
+	"io"
 	"io/fs"
 	"os"
 	"strings"
@@ -50,4 +51,18 @@ func (d Decoder) Decode(value interface{}) error {
 	}
 
 	return nil
+}
+
+// DecoderBuilder TODO
+type DecoderBuilder Decoder
+
+// Build TODO
+func (b DecoderBuilder) Build(reader io.Reader) data.Decoder {
+	if reader != nil {
+		if bytes, err := io.ReadAll(reader); err == nil {
+			b.Path = string(bytes)
+		}
+	}
+
+	return Decoder(b)
 }
